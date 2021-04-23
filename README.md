@@ -6,8 +6,24 @@ https://app.quickdatabasediagrams.com/#/d/jCPv6V
 The [included pdf](data_model/Fetch-Exercise-Diagram-Documentation.pdf) file adds a bit of commentary about the data model.
 
 ## Second: Query that directly answers question from a stakeholder
+When considering *total number of items purchased* from receipts with `rewardsReceiptStatus` of `Accepted` or `Rejected`, which is greater?
+> FYI I am taking the literal route of providing a direct answer of either `Accepted` or `Rejected` rather than just the total values for each.
 ```SQL 
-Select * from here
+with
+total_items_by_status as (
+    select
+        sum(purchased_item_count) filter (where rewards_receipt_status = 'Accepted') as accepted_item_count,
+        sum(purchased_item_count) filter (where rewards_receipt_status = 'Rejected') as rejected_item_count
+    from receipts
+)
+
+select
+    case 
+        when accepted_item_count > rejected_item_count then 'Accepted'
+        when accepted_item_count < rejected_item_count then 'Rejected'
+        else 'Tie'
+    end as receipt_status_with_the_most_items_purchased
+from total_items_by_status
 ```
 ## Third: Data Quality Issues
 To explore the data provided and look for quality issues I typically mix manual EDA with some automated profilers. Specifically the python packages `pandas-profiling` and `missingno`. The profilers aren't always feasible with extremely large datasets so I will usually do as much as I can manually to test for:
