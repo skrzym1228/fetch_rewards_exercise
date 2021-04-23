@@ -31,15 +31,22 @@ def analyze_and_save_df(df, name):
     logger.debug(f'>>> saving profile as {profile_output_name}')
     df_profile.to_file(output_file=profile_output_name)
 
-    missingno_output_name = f'eda_results/{name}/{name}_missingno_output.png'
+    missingno_output_name = f'eda_results/{name}/{name}_missingno_output_'
     logger.debug(f'>>> analyzing missing data for {name}')
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(100,50))
-    msno.matrix(df, sparkline=False, ax=ax1)
-    msno.bar(df, ax=ax2)
-    msno.dendrogram(df, ax=ax3)
-    msno.heatmap(df, ax=ax4)
-    logger.debug(f'>>> saving plots to {missingno_output_name}')
-    fig.savefig(missingno_output_name)
+    logger.debug(f'>>> saving plots to {name} eda directory...')
+    
+    fig, ax = plt.subplots(1, 1, figsize=(25,13))
+    msno.matrix(df, sparkline=False, ax=ax)
+    fig.savefig(missingno_output_name + 'matrix.png')
+    
+    ax.clear()
+    msno.bar(df, ax=ax)
+    fig.savefig(missingno_output_name + 'bar.png')
+    
+    ax.clear()
+    msno.heatmap(df, ax=ax)
+    fig.savefig(missingno_output_name + 'heatmap.png')
+    
     plt.close(fig) 
 
 
