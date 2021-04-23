@@ -2,7 +2,8 @@
 
 ## First: Data Model
 https://app.quickdatabasediagrams.com/#/d/jCPv6V  
-The included pdf file adds a bit of commentary about the data model but one of the pain points I found was the need to join brands to line items via "brandCode".
+![Data Model](data_model/Fetch-Exercise-Diagram.png)
+The [included pdf](data_model/Fetch-Exercise-Diagram-Documentation.pdf) file adds a bit of commentary about the data model.
 
 ## Second: Query that directly answers question from a stakeholder
 ```SQL 
@@ -21,10 +22,10 @@ For these files I was able to use the mentioned profilers and manual checking of
 
 One issue I found has to do with the key join field of "brandCode". It is missing in 62% of line item records and in 20% of brand records. It also contains duplicate values for "HUGGIES" and "GOODNITES" in the brands dataset making it ambiguous when joining to line items.
 
-**You can see what I did to generate the csv files and profiler reports/charts in the `eda.py` file.**
+You can see what I did to generate the csv files and profiler reports/charts in the `eda.py` file. The eda_results directory has the csv, png, and html files that the script generates per table. Note: the html files won't render directly in github so downloading them locally or cloning the entire repo is required to view them properly if desired. I didn't use a jupyter notebook this time so the pandas-profiler results aren't as easy to work with :)
 
 ## Fourth: Communicate with Stakeholders
-Here is an email to a project stakeholder named "Debbie" that I am imagining provided these original data files as well as a project brief asking for some data assets to be created for her team to help in answering analytical questions.
+Here is an email to a project stakeholder named "Debbie". I am imagining she provided the json files and a project brief asking the data team to create some assets for her team to answer analytical questions.
 > Hi Debbie,  
 > My name is Michael and I am part of the data team that's building out the analytics platform for your department. I have a few updates about the project and a few questions about the data I hope you can answer.  
 >
